@@ -1,0 +1,19 @@
+services:
+  api_service:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql_db
+    links:
+      - postgresql_db:postgresql_db
+  postgresql_db:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: library
+      POSTGRES_USER: library_user
+      POSTGRES_PASSWORD: pass
